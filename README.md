@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center"><b> 👨‍💻 Amplify Healthcare Application </b></h1>
+  <h1 align="center"><b> 👨‍💻 MediFind </b></h1>
 </p>
 
 **Welcome to my submission for the AWS Amplify Hackathon!**
