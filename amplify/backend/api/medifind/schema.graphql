@@ -1,0 +1,24 @@
+type HealthcareProvider @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  website: String!
+  contact: String!
+  hoursOfOperation: [OperatingHours!]!
+  speciality: String!
+  address: Address!
+}
+
+type OperatingHours {
+  dayOfWeek: String!
+  openTime: String!
+  closeTime: String!
+}
+
+type Address {
+  street: String!
+  postalCode: String!
+  city: String!
+  province: String!
+  country: String!
+}
+ 
