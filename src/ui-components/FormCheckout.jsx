@@ -6,6 +6,7 @@
 
 /* eslint-disable */
 import * as React from "react";
+import { useState } from 'react';
 import {
   getOverrideProps,
   useDataStoreCreateAction,
@@ -24,6 +25,7 @@ import {
 } from "@aws-amplify/ui-react";
 export default function FormCheckout(props) {
   const { overrides, ...rest } = props;
+  const [selectedProvince, setSelectedProvince] = useState("");
   const [
     textFieldTwoNineSevenSixSevenZeroZeroNineValue,
     setTextFieldTwoNineSevenSixSevenZeroZeroNineValue,

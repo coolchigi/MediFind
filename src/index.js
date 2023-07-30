@@ -5,9 +5,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { ThemeProvider } from "@aws-amplify/ui-react";
+import { AmplifyProvider, ThemeProvider, Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import { studioTheme } from "./ui-components";
+import { BrowserRouter  } from "react-router-dom";
 
 
 import config from './aws-exports';
@@ -16,9 +17,15 @@ Amplify.configure(config);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <AmplifyProvider>
     <ThemeProvider theme={studioTheme}>
-      <App />
+      <Authenticator.Provider>
+        <BrowserRouter>
+        <App />
+        </BrowserRouter>
+      </Authenticator.Provider>
     </ThemeProvider>
+    </AmplifyProvider>
   </React.StrictMode>
 );
 

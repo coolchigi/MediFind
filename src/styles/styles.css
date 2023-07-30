@@ -38,3 +38,12 @@
     --amplify-border-widths-medium: 4px;
     --amplify-border-widths-large: 8px;
 }
+
+.signIn-Header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    /* Adjust the gap between the image and authentication screen as needed */
+    margin-bottom: 20px
+}
