@@ -80,7 +80,7 @@ export default function NavBarHeader2(props) {
             {...getOverrideProps(overrides, "Union")}
           ></Icon>
         </View>
-        <Link to="/home" style={{ textDecoration: "none" }}>
+        <Link to="/" style={{ textDecoration: "none" }}>
           <Text
             fontFamily="Inter"
             fontSize="16px"
@@ -131,27 +131,29 @@ export default function NavBarHeader2(props) {
             {...getOverrideProps(overrides, "Products")}
           ></Text>
         </Link>
-        <Text
-          fontFamily="Inter"
-          fontSize="16px"
-          fontWeight="400"
-          color="rgba(13,26,38,1)"
-          lineHeight="24px"
-          textAlign="left"
-          display="block"
-          direction="column"
-          justifyContent="unset"
-          width="unset"
-          height="unset"
-          gap="unset"
-          alignItems="unset"
-          shrink="0"
-          position="relative"
-          padding="0px 0px 0px 0px"
-          whiteSpace="pre-wrap"
-          children="Pricing"
-          {...getOverrideProps(overrides, "Pricing")}
-        ></Text>
+        <Link to="/edit" style={{ textDecoration: "none" }}>
+          <Text
+            fontFamily="Inter"
+            fontSize="16px"
+            fontWeight="400"
+            color="#1a237e"
+            lineHeight="24px"
+            textAlign="left"
+            display="block"
+            direction="column"
+            justifyContent="unset"
+            width="unset"
+            height="unset"
+            gap="unset"
+            alignItems="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            whiteSpace="pre-wrap"
+            children="Edit Provider"
+            {...getOverrideProps(overrides, "Pricing")}
+          ></Text>
+        </Link>
         <Text
           fontFamily="Inter"
           fontSize="16px"

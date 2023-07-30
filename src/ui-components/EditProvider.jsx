@@ -12,6 +12,7 @@ import {
   Flex,
   Grid,
   TextField,
+  Text
 } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { HealthcareProvider } from "../models";
@@ -33,15 +34,15 @@ export default function EditProvider(props) {
   const initialValues = {
     name: "",
     website: "",
-    Field1: "",
-    Field0: undefined,
+    city: "",
+    province: undefined,
     contact: "",
     speciality: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [website, setWebsite] = React.useState(initialValues.website);
-  const [Field1, setField1] = React.useState(initialValues.Field1);
-  const [Field0, setField0] = React.useState(initialValues.Field0);
+  const [city, setField1] = React.useState(initialValues.city);
+  const [province, setField0] = React.useState(initialValues.province);
   const [contact, setContact] = React.useState(initialValues.contact);
   const [speciality, setSpeciality] = React.useState(initialValues.speciality);
   const [errors, setErrors] = React.useState({});
@@ -51,8 +52,8 @@ export default function EditProvider(props) {
       : initialValues;
     setName(cleanValues.name);
     setWebsite(cleanValues.website);
-    setField1(cleanValues.Field1);
-    setField0(cleanValues.Field0);
+    setField1(cleanValues.city);
+    setField0(cleanValues.province);
     setContact(cleanValues.contact);
     setSpeciality(cleanValues.speciality);
     setErrors({});
@@ -72,8 +73,8 @@ export default function EditProvider(props) {
   const validations = {
     name: [{ type: "Required" }],
     website: [{ type: "Required" }],
-    Field1: [],
-    Field0: [],
+    city: [],
+    province: [],
     contact: [{ type: "Required" }],
     speciality: [{ type: "Required" }],
   };
@@ -105,8 +106,8 @@ export default function EditProvider(props) {
         let modelFields = {
           name,
           website,
-          Field1,
-          Field0,
+          city,
+          province,
           contact,
           speciality,
         };
@@ -161,7 +162,9 @@ export default function EditProvider(props) {
       {...getOverrideProps(overrides, "EditProvider")}
       {...rest}
     >
+      <Text variation="primary" fontSize="2em" >Edit Healthcare Provider</Text>
       <TextField
+        width="40%"
         label={
           <span style={{ display: "inline-flex" }}>
             <span>Name</span>
@@ -177,8 +180,8 @@ export default function EditProvider(props) {
             const modelFields = {
               name: value,
               website,
-              Field1,
-              Field0,
+              city,
+              province,
               contact,
               speciality,
             };
@@ -196,6 +199,7 @@ export default function EditProvider(props) {
         {...getOverrideProps(overrides, "name")}
       ></TextField>
       <TextField
+        width="40%"
         label={
           <span style={{ display: "inline-flex" }}>
             <span>Website</span>
@@ -205,14 +209,15 @@ export default function EditProvider(props) {
         isRequired={true}
         isReadOnly={false}
         value={website}
+
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
               website: value,
-              Field1,
-              Field0,
+              city,
+              province,
               contact,
               speciality,
             };
@@ -230,110 +235,112 @@ export default function EditProvider(props) {
         {...getOverrideProps(overrides, "website")}
       ></TextField>
       <TextField
+        width="40%"
         label="City"
-        value={Field1}
+        value={city}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
               website,
-              Field1: value,
-              Field0,
+              city: value,
+              province,
               contact,
               speciality,
             };
             const result = onChange(modelFields);
-            value = result?.Field1 ?? value;
+            value = result?.city ?? value;
           }
           if (errors.Field1?.hasError) {
-            runValidationTasks("Field1", value);
+            runValidationTasks("city", value);
           }
           setField1(value);
         }}
-        onBlur={() => runValidationTasks("Field1", Field1)}
-        errorMessage={errors.Field1?.errorMessage}
-        hasError={errors.Field1?.hasError}
-        {...getOverrideProps(overrides, "Field1")}
+        onBlur={() => runValidationTasks("city", city)}
+        errorMessage={errors.city?.errorMessage}
+        hasError={errors.city?.hasError}
+        {...getOverrideProps(overrides, "city")}
       ></TextField>
-      <Autocomplete
+      <Autocomplete width="40%"
         label="Province"
         options={[
           {
             id: "Ontario",
-            label: "Ontario",
+            label: "ON",
           },
           {
             id: "Quebec",
-            label: "Quebec",
+            label: "QC",
           },
           {
-            id: " Nova Scotia",
-            label: " Nova Scotia",
+            id: "Nova Scotia",
+            label: "NS",
           },
           {
             id: "New Brunswick",
-            label: "New Brunswick",
+            label: "NB",
           },
           {
             id: "Manitoba",
-            label: "Manitoba",
+            label: "MB",
           },
           {
             id: "British Columbia",
-            label: "British Columbia",
+            label: "BC",
           },
           {
             id: "Prince Edward Island",
-            label: "Prince Edward Island",
+            label: "PE",
           },
           {
             id: " Saskatchewan",
-            label: " Saskatchewan",
+            label: "SK",
           },
           {
             id: "Alberta",
-            label: "Alberta",
+            label: "AB",
           },
           {
             id: "Newfoundland and Labrador",
-            label: "Newfoundland and Labrador",
+            label: "NL",
           },
         ]}
         onSelect={({ id, label }) => {
           setField0(id);
-          runValidationTasks("Field0", id);
+          runValidationTasks("province", id);
         }}
         onClear={() => {
           setField0("");
         }}
-        defaultValue={Field0}
+        defaultValue={province}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
               website,
-              Field1,
-              Field0: value,
+              city,
+              province: value,
               contact,
               speciality,
             };
             const result = onChange(modelFields);
-            value = result?.Field0 ?? value;
+            value = result?.province ?? value;
           }
-          if (errors.Field0?.hasError) {
-            runValidationTasks("Field0", value);
+          if (errors.province?.hasError) {
+            runValidationTasks("province", value);
           }
           setField0(value);
         }}
-        onBlur={() => runValidationTasks("Field0", Field0)}
-        errorMessage={errors.Field0?.errorMessage}
-        hasError={errors.Field0?.hasError}
+        onBlur={() => runValidationTasks("province", province)}
+        errorMessage={errors.province?.errorMessage}
+        hasError={errors.province?.hasError}
         labelHidden={false}
-        {...getOverrideProps(overrides, "Field0")}
+        {...getOverrideProps(overrides, "province")}
       ></Autocomplete>
       <TextField
+        width="40%"
         label={
           <span style={{ display: "inline-flex" }}>
             <span>Contact</span>
@@ -349,8 +356,8 @@ export default function EditProvider(props) {
             const modelFields = {
               name,
               website,
-              Field1,
-              Field0,
+              city,
+              province,
               contact: value,
               speciality,
             };
@@ -368,6 +375,7 @@ export default function EditProvider(props) {
         {...getOverrideProps(overrides, "contact")}
       ></TextField>
       <TextField
+        width="40%"
         label={
           <span style={{ display: "inline-flex" }}>
             <span>Speciality</span>
@@ -383,8 +391,8 @@ export default function EditProvider(props) {
             const modelFields = {
               name,
               website,
-              Field1,
-              Field0,
+              city,
+              province,
               contact,
               speciality: value,
             };

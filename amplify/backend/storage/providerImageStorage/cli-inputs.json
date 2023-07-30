@@ -1,0 +1,13 @@
+{
+  "resourceName": "providerImageStorage",
+  "policyUUID": "3db5a61a",
+  "bucketName": "medifind-storage",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

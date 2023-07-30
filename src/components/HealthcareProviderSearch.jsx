@@ -45,6 +45,7 @@ const HealthcareProviderSearch = () => {
 
         <Flex direction="column"
             alignItems="center">
+            <h1>Welcome to MediFind!</h1>
             <div style={{ marginLeft: '1200px', marginRight: '120px' }}>
                 <SearchField
                     label="Search"
@@ -56,7 +57,6 @@ const HealthcareProviderSearch = () => {
                     }}
                     onChange={(event) => handleChange(event.target.value)}
                     value={searchTerm}
-
                 />
             </div>
             <div>
@@ -74,13 +74,11 @@ const HealthcareProviderSearch = () => {
                     >
                         <Paper
                             elevation={0} variant="outlined" square
-
                             style={{
                                 backgroundColor: "#ce93d8",
                                 margin: "16px 0px"
 
-                            }}
-                        >
+                            }}>
                             <div>
                                 <Typography variant="h5" color="#fff"> {provider.name}</Typography>
                                 <Typography color="#fff">{provider.website}</Typography>

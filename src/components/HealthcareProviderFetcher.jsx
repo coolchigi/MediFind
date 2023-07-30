@@ -27,76 +27,80 @@ const HealthcareProviderFetcher = () => {
     return (
         <div>
             <HealthcareProviderSearch />
-            {providers.map((provider) => (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        '& > :not(style)': {
-                            m: 2,
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'row', // This will make the boxes appear horizontally
+                    flexWrap: 'wrap',
+                }}
+            >
+                {providers.map((provider) => (
+                    <Box
+                        key={provider.id}
+                        sx={{
+                            m: 1,
                             width: 'auto',
                             height: 'auto',
                             borderRadius: '10px',
-                        },
-                    }}
-                >
-                    <Paper
-                        elevation={0} variant="outlined" square
-
-                        style={{
-                            backgroundColor: "#1a237e",
-
-
-
                         }}
                     >
-                        <div>
-                            <Typography variant="h5" color="#fff"> {provider.name}</Typography>
-                            <Typography color="#fff">{provider.website}</Typography>
-                            <Typography color="#fff">{provider.contact}</Typography>
-                            <Typography color="#fff">{provider.speciality}</Typography>
-
+                        <Paper
+                            style={{
+                                backgroundColor: "#1a237e",
+                            }}>
                             <div>
-                                <Chip
-                                    sx={{
-                                        backgroundColor: '#b39ddb',
-                                        color: 'white',
-                                    }}
-                                    label={`${provider.address.street}`} />
-                                <Chip
-                                    sx={{
-                                        backgroundColor: '#b39ddb',
-                                        color: 'white',
-                                    }}
-
-                                    label={` ${provider.address.city}`} />
-                                <Chip
-                                    sx={{
-                                        backgroundColor: '#b39ddb',
-                                        color: 'white',
-                                    }}
-
-                                    label={`${provider.address.province}`} />
-                                <Chip
-                                    sx={{
-                                        backgroundColor: '#b39ddb',
-                                        color: 'white',
-                                    }}
-
-                                    label={`${provider.address.postalCode}`} />
-                                <Chip
-                                    sx={{
-                                        backgroundColor: '#b39ddb',
-                                        color: 'white',
-                                    }}
-                                    label={`${provider.address.country}`} />
+                                <Typography variant="h5" color="#fff"> {provider.name}</Typography>
+                                <Typography color="#fff">{provider.website}</Typography>
+                                <Typography color="#fff">{provider.contact}</Typography>
+                                <Typography color="#fff">{provider.speciality}</Typography>
+                                <details>
+                                    <summary
+                                        style={{ color: '#fff' }}
+                                    >Address</summary>
+                                    <Chip
+                                        sx={{
+                                            backgroundColor: '#b39ddb',
+                                            color: 'white',
+                                        }}
+                                        label={`${provider.address.street}`} />
+                                    <Chip
+                                        sx={{
+                                            backgroundColor: '#b39ddb',
+                                            color: 'white',
+                                        }}
+                                        label={` ${provider.address.city}`} />
+                                    <Chip
+                                        sx={{
+                                            backgroundColor: '#b39ddb',
+                                            color: 'white',
+                                        }}
+                                        label={`${provider.address.province}`} />
+                                    <Chip
+                                        sx={{
+                                            backgroundColor: '#b39ddb',
+                                            color: 'white',
+                                        }}
+                                        label={`${provider.address.postalCode}`} />
+                                    <Chip
+                                        sx={{
+                                            backgroundColor: '#b39ddb',
+                                            color: 'white',
+                                        }}
+                                        label={`${provider.address.country}`} />
+                                </details>
                             </div>
                             <Accordion>
                                 <AccordionSummary>
-                                    <Typography variant="h9">Operating Hours: </Typography>
+                                    <Typography variant="h9" sx={{
+                                        color: "#1a237e",
+                                    }}>Operating Hours: </Typography>
                                 </AccordionSummary>
                                 <AccordionDetails
-                                    sx={{ padding: '10px', color: '#2196f3' }}>
+                                    sx={{
+                                        padding: '10px', backgroundColor: "#1a237e", // Change the background color
+                                        color: "white",
+                                        borderRadius: '8px'
+                                    }}>
                                     {provider.hoursOfOperation.map((hours, index) => (
                                         <div key={index}>
                                             <Typography>{hours.dayOfWeek} {hours.openTime} {hours.closeTime}</Typography>
@@ -104,10 +108,10 @@ const HealthcareProviderFetcher = () => {
                                     ))}
                                 </AccordionDetails>
                             </Accordion>
-                        </div>
-                    </Paper>
-                </Box>
-            ))}
+                        </Paper>
+                    </Box>
+                ))}
+            </Box>
         </div>
     );
 };

@@ -6,7 +6,6 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { useState } from 'react';
 import {
   getOverrideProps,
   useDataStoreCreateAction,
@@ -25,7 +24,7 @@ import {
 } from "@aws-amplify/ui-react";
 export default function FormCheckout(props) {
   const { overrides, ...rest } = props;
-  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedProvince, setSelectedProvince] = React.useState("");
   const [
     textFieldTwoNineSevenSixSevenZeroZeroNineValue,
     setTextFieldTwoNineSevenSixSevenZeroZeroNineValue,
@@ -282,6 +281,26 @@ export default function FormCheckout(props) {
                 }}
                 {...getOverrideProps(overrides, "TextField39343126")}
               ></TextField>
+              <TextField
+                width="unset"
+                height="unset"
+                label="Country"
+                grow="1"
+                shrink="1"
+                basis="0"
+                placeholder=""
+                size="default"
+                isDisabled={false}
+                labelHidden={false}
+                variation="default"
+                value={textFieldThreeNineThreeFourThreeOneTwoSix}
+                onChange={(event) => {
+                  setTextFieldThreeNineThreeFourThreeOneTwoSix(
+                    event.target.value
+                  );
+                }}
+                {...getOverrideProps(overrides, "TextField39343126")}
+              ></TextField>
               <SelectField
                 width="100px"
                 height="unset"
@@ -291,7 +310,7 @@ export default function FormCheckout(props) {
                 size="default"
                 isDisabled={false}
                 labelHidden={false}
-                options={['AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'NT', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT']}
+                options={['AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'ON', 'PE', 'QC', 'SK']}
                 variation="default"
                 value={selectedProvince}
                 onChange={(event) => setSelectedProvince(event.target.value)}
@@ -421,6 +440,7 @@ export default function FormCheckout(props) {
           >
             <Button
               width="unset"
+              backgroundColor="#1a237e"
               height="unset"
               shrink="0"
               alignSelf="stretch"
