@@ -13,6 +13,7 @@ import {
 } from "@aws-amplify/ui-react/internal";
 import { HealthcareProvider } from "../models";
 import { schema } from "../models/schema";
+import { createHealthcareProvider } from "../graphql/mutations";
 import {
   Button,
   Flex,
@@ -22,8 +23,12 @@ import {
   TextAreaField,
   TextField,
 } from "@aws-amplify/ui-react";
+import { API } from "aws-amplify";
+import { useState } from 'react';
 export default function FormCheckout(props) {
   const { overrides, ...rest } = props;
+  const [successMessage, setSuccessMessage] = useState('');
+  const [selectedProvince, setSelectedProvince] = React.useState("");
   const [
     textFieldTwoNineSevenSixSevenZeroZeroNineValue,
     setTextFieldTwoNineSevenSixSevenZeroZeroNineValue,
@@ -40,26 +45,92 @@ export default function FormCheckout(props) {
     textFieldThreeNineThreeFourThreeOneSixFiveValue,
     setTextFieldThreeNineThreeFourThreeOneSixFiveValue,
   ] = useStateMutationAction("");
-  const [textFieldTwoNineSevenSixSevenZeroOneFour, setTextFieldTwoNineSevenSixSevenZeroOneFour] = useStateMutationAction("");
-  const [textFieldTwoNineSevenSixSevenZeroOneFive, setTextFieldTwoNineSevenSixSevenZeroOneFive] = useStateMutationAction("");
-  const [textFieldThreeNineThreeFourThreeOneTwoSix, setTextFieldThreeNineThreeFourThreeOneTwoSix] = useStateMutationAction("");
-  const buttonOnClick = useDataStoreCreateAction({
-    model: HealthcareProvider,
-    fields: {
-      name: textFieldTwoNineSevenSixSevenZeroZeroNineValue,
-      website: textFieldTwoNineSevenSixSevenZeroOneZeroValue,
-      hoursOfOperation: "[]",
-      speciality: textFieldThreeNineThreeFourThreeOneThreeFourValue,
-      address: {
-        street: textFieldTwoNineSevenSixSevenZeroOneFour,
-        city: textFieldTwoNineSevenSixSevenZeroOneFive,
-        postalCode: textFieldThreeNineThreeFourThreeOneTwoSix,
-        province: selectedProvince,
-      },
-      contact: textFieldThreeNineThreeFourThreeOneSixFiveValue,
-    },
-    schema: schema,
-  });
+
+  // Street 
+  const [textFieldTwoNineSevenSixSevenZeroOneFourValue, setTextFieldTwoNineSevenSixSevenZeroOneFour] = useStateMutationAction("");
+  // City
+  const [textFieldTwoNineSevenSixSevenZeroOneFiveValue, setTextFieldTwoNineSevenSixSevenZeroOneFive] = useStateMutationAction("");
+  // Postal Code
+  const [textFieldThreeNineThreeFourThreeOneTwoSixValue, setTextFieldThreeNineThreeFourThreeOneTwoSix] = useStateMutationAction("");
+  // Country
+  const [textFieldThreeNineThreeFourThreeOneTwoFiveValue, setTextFieldThreeNineThreeFourThreeOneTwoFive] = useStateMutationAction("");
+
+  // Operating Hours
+  const [textAreaFieldValue, setTextTextAreaField] = useStateMutationAction("");
+
+  const convertHoursOfOperation = (hoursString) => {
+    const days = hoursString.split('\n');
+    const hoursOfOperation = [];
+
+    days.forEach((day) => {
+      const dayInfo = day.trim().split(' ');
+
+      if (dayInfo.length === 3) {
+        // Format: Monday 10am 5pm (single-day format)
+        const [dayOfWeek, startTime, endTime] = dayInfo;
+        const formattedDay = {
+          dayOfWeek,
+          openTime: startTime,
+          closeTime: endTime,
+        };
+        hoursOfOperation.push(formattedDay);
+      } else {
+        let i = 0;
+        while (i < dayInfo.length) {
+          const dayOfWeek = dayInfo[i++];
+          const startTime = dayInfo[i++];
+          const endTime = dayInfo[i++];
+          const formattedDay = {
+            dayOfWeek,
+            openTime: startTime,
+            closeTime: endTime,
+          };
+          hoursOfOperation.push(formattedDay);
+        }
+      }
+    });
+
+    return hoursOfOperation;
+  };
+
+  const createHealthCareProFunction = async () => {
+    try {
+      const hrsOfOperation = convertHoursOfOperation(textAreaFieldValue);
+      const providerInput = {
+        name: textFieldTwoNineSevenSixSevenZeroZeroNineValue,
+        website: textFieldTwoNineSevenSixSevenZeroOneZeroValue,
+        hoursOfOperation: hrsOfOperation,
+        speciality: textFieldThreeNineThreeFourThreeOneThreeFourValue,
+        address: {
+          street: textFieldTwoNineSevenSixSevenZeroOneFourValue,
+          city: textFieldTwoNineSevenSixSevenZeroOneFiveValue,
+          postalCode: textFieldThreeNineThreeFourThreeOneTwoSixValue,
+          province: selectedProvince,
+          country: textFieldThreeNineThreeFourThreeOneTwoFiveValue,
+        },
+        contact: textFieldThreeNineThreeFourThreeOneSixFiveValue
+      }
+      const result = await API.graphql({ query: createHealthcareProvider, variables: { input: providerInput } });
+      console.log(result);
+
+      setTextFieldTwoNineSevenSixSevenZeroZeroNineValue("")
+      setTextFieldTwoNineSevenSixSevenZeroOneZeroValue("")
+      setTextFieldThreeNineThreeFourThreeOneThreeFourValue("")
+      setTextFieldThreeNineThreeFourThreeOneSixFiveValue("")
+      setTextFieldTwoNineSevenSixSevenZeroOneFour("")
+      setTextFieldTwoNineSevenSixSevenZeroOneFive("")
+      setTextFieldThreeNineThreeFourThreeOneTwoSix("")
+      setTextFieldThreeNineThreeFourThreeOneTwoFive("")
+      setSelectedProvince("")
+      setTextTextAreaField("")
+
+
+      setSuccessMessage('Healthcare provider added successfully!');
+    } catch (err) {
+      console.error('Error adding healthcare providers:', err);
+    }
+  }
+
   return (
     <Flex
       gap="48px"
@@ -218,7 +289,7 @@ export default function FormCheckout(props) {
               isDisabled={false}
               labelHidden={false}
               variation="default"
-              value={textFieldTwoNineSevenSixSevenZeroOneFour}
+              value={textFieldTwoNineSevenSixSevenZeroOneFourValue}
               onChange={(event) => {
                 setTextFieldTwoNineSevenSixSevenZeroOneFour(
                   event.target.value
@@ -251,12 +322,11 @@ export default function FormCheckout(props) {
                 isDisabled={false}
                 labelHidden={false}
                 variation="default"
-                value={textFieldTwoNineSevenSixSevenZeroOneFive}
+                value={textFieldTwoNineSevenSixSevenZeroOneFiveValue}
                 onChange={(event) => {
                   setTextFieldTwoNineSevenSixSevenZeroOneFive(
                     event.target.value
                   );
-
                 }}
                 {...getOverrideProps(overrides, "TextField29767015")}
               ></TextField>
@@ -272,9 +342,29 @@ export default function FormCheckout(props) {
                 isDisabled={false}
                 labelHidden={false}
                 variation="default"
-                value={textFieldThreeNineThreeFourThreeOneTwoSix}
+                value={textFieldThreeNineThreeFourThreeOneTwoSixValue}
                 onChange={(event) => {
                   setTextFieldThreeNineThreeFourThreeOneTwoSix(
+                    event.target.value
+                  );
+                }}
+                {...getOverrideProps(overrides, "TextField39343126")}
+              ></TextField>
+              <TextField
+                width="unset"
+                height="unset"
+                label="Country"
+                grow="1"
+                shrink="1"
+                basis="0"
+                placeholder=""
+                size="default"
+                isDisabled={false}
+                labelHidden={false}
+                variation="default"
+                value={textFieldThreeNineThreeFourThreeOneTwoFiveValue}
+                onChange={(event) => {
+                  setTextFieldThreeNineThreeFourThreeOneTwoFive(
                     event.target.value
                   );
                 }}
@@ -289,7 +379,7 @@ export default function FormCheckout(props) {
                 size="default"
                 isDisabled={false}
                 labelHidden={false}
-                options={['AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'NT', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT']}
+                options={['AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'ON', 'PE', 'QC', 'SK']}
                 variation="default"
                 value={selectedProvince}
                 onChange={(event) => setSelectedProvince(event.target.value)}
@@ -400,6 +490,11 @@ export default function FormCheckout(props) {
               isDisabled={false}
               labelHidden={false}
               variation="default"
+              onChange={(event) => {
+                setTextTextAreaField(
+                  event.target.value
+                );
+              }}
               {...getOverrideProps(overrides, "TextAreaField")}
             ></TextAreaField>
           </Flex>
@@ -419,6 +514,7 @@ export default function FormCheckout(props) {
           >
             <Button
               width="unset"
+              backgroundColor="#1a237e"
               height="unset"
               shrink="0"
               alignSelf="stretch"
@@ -426,11 +522,12 @@ export default function FormCheckout(props) {
               isDisabled={false}
               variation="primary"
               children="Add provider"
-              onClick={() => {
-                buttonOnClick();
-              }}
+              onClick={
+                createHealthCareProFunction
+              }
               {...getOverrideProps(overrides, "Button")}
             ></Button>
+            {successMessage && <p>{successMessage}</p>}
           </Flex>
         </Flex>
         <Flex
