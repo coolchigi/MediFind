@@ -11,8 +11,6 @@ import {
   useDataStoreCreateAction,
   useStateMutationAction,
 } from "@aws-amplify/ui-react/internal";
-import { HealthcareProvider } from "../models";
-import { schema } from "../models/schema";
 import { createHealthcareProvider } from "../graphql/mutations";
 import {
   Button,
@@ -130,7 +128,6 @@ export default function FormCheckout(props) {
       console.error('Error adding healthcare providers:', err);
     }
   }
-
   return (
     <Flex
       gap="48px"
@@ -543,19 +540,6 @@ export default function FormCheckout(props) {
           backgroundColor="rgba(255,255,255,1)"
           {...getOverrideProps(overrides, "Frame 4113975370")}
         >
-          <Image
-            width="483px"
-            height="488px"
-            display="block"
-            gap="unset"
-            alignItems="unset"
-            justifyContent="unset"
-            shrink="0"
-            position="relative"
-            padding="0px 0px 0px 0px"
-            objectFit="contain"
-            {...getOverrideProps(overrides, "image")}
-          ></Image>
         </Flex>
       </Flex>
     </Flex>

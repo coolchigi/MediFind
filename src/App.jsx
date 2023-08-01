@@ -8,6 +8,8 @@ import "./styles/styles.css"
 import FormCheckout from './ui-components/FormCheckout';
 import NavBarHeader2 from './ui-components/NavBarHeader2';
 import EditProvider from './ui-components/EditProvider';
+import AddProviderImage from './ui-components/AddProviderImage';
+
 
 function App() {
   const { user, signOut } = useAuthenticator();
@@ -21,6 +23,7 @@ function App() {
             <Route path="/" element={<HealthcareProviderFetcher />} />
             <Route path="/create" element={<FormCheckout />} />
             <Route path="/edit" element={<EditProvider />} />
+            <Route path="/images" element={<AddProviderImage />} />
           </Routes>
           {/* <FormCheckout /> */}
         </main>

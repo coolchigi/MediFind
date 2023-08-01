@@ -131,6 +131,30 @@ export default function NavBarHeader2(props) {
             {...getOverrideProps(overrides, "Products")}
           ></Text>
         </Link>
+
+        <Link to="/images" style={{ textDecoration: "none" }}>
+          <Text
+            fontFamily="Inter"
+            fontSize="16px"
+            fontWeight="400"
+            color="rgba(13,26,38,1)"
+            lineHeight="24px"
+            textAlign="left"
+            display="block"
+            direction="column"
+            justifyContent="unset"
+            width="unset"
+            height="unset"
+            gap="unset"
+            alignItems="unset"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            whiteSpace="pre-wrap"
+            children="Add Images"
+            {...getOverrideProps(overrides, "Contact")}
+          ></Text>
+        </Link>
         <Link to="/edit" style={{ textDecoration: "none" }}>
           <Text
             fontFamily="Inter"
@@ -154,27 +178,6 @@ export default function NavBarHeader2(props) {
             {...getOverrideProps(overrides, "Pricing")}
           ></Text>
         </Link>
-        <Text
-          fontFamily="Inter"
-          fontSize="16px"
-          fontWeight="400"
-          color="rgba(13,26,38,1)"
-          lineHeight="24px"
-          textAlign="left"
-          display="block"
-          direction="column"
-          justifyContent="unset"
-          width="unset"
-          height="unset"
-          gap="unset"
-          alignItems="unset"
-          shrink="0"
-          position="relative"
-          padding="0px 0px 0px 0px"
-          whiteSpace="pre-wrap"
-          children="Contact"
-          {...getOverrideProps(overrides, "Contact")}
-        ></Text>
       </Flex>
       <Flex
         gap="8px"
