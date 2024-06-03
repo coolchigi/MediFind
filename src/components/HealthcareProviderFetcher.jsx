@@ -12,7 +12,7 @@ const HealthcareProviderFetcher = () => {
 
     useEffect(() => {
         fetchHealthcareProviders();
-    }, []); // Ensure an empty dependency array, so it runs only once on mount
+    }, []); // empty dependency array, so it runs only once on mount
 
     const fetchHealthcareProviders = async () => {
         try {
